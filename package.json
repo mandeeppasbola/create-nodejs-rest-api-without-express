@@ -1,0 +1,15 @@
+{
+  "name": "create-nodejs-rest-api-without-express",
+  "version": "1.0.0",
+  "description": "Creating REST API in NodeJS without using Express JS",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": " "
+  },
+  "author": "FrontendGuruji",
+  "license": "ISC"
+}
