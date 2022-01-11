@@ -1,30 +1,38 @@
-const qs = require("querystring");
-
 const postHandler = (request, response) => {
-  // custom body-parser starts
+  // custom body-parser for POST request starts
+  // http request object is a readable stream,
+  // i.e. data arrives in parts/chunks.
+
   let chunks = [];
+  // 'data' event is emitted on every chunk received
   request.on("data", (chunk) => {
+    // collecting the chunks in array
     chunks.push(chunk);
   });
+
+  // when all chunks are received, 'end' event is emitted.
   request.on("end", () => {
+    // joining all the chunks received
     const data = Buffer.concat(chunks);
-    const parsedData = qs.parse(data.toString());
+    // data.toString() converts Buffer data to querystring format
+    // URLSearchParams: takes querystring
+    // & returns data in Object format
+    const parsedData = new URLSearchParams(data.toString());
     console.log(parsedData);
     // Now request data is accessible using parsedData
-    // And we can do any operation on the same, like saving it to databse
-    // custom body-parser ends
-
-    //return the success response
-    response.writeHead(200, {
-      "Content-Type": "application/json",
-    });
-    response.write(
-      JSON.stringify({
-        message: "POST Succesfull",
-      })
-    );
     response.end();
   });
+  // custom body-parser for POST request ends
+
+  response.writeHead(200, {
+    "Content-Type": "application/json",
+  });
+  response.write(
+    JSON.stringify({
+      message: "POST Succesfull",
+    })
+  );
+  response.end();
 };
 
 const getHandler = (request, response) => {
