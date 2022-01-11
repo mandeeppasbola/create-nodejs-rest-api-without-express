@@ -20,19 +20,18 @@ const postHandler = (request, response) => {
     const parsedData = new URLSearchParams(data.toString());
     console.log(parsedData);
     // Now request data is accessible using parsedData
+    // sending back "Successfull message"
+    response.writeHead(200, {
+      "Content-Type": "application/json",
+    });
+    response.write(
+      JSON.stringify({
+        message: "POST Successfull",
+      })
+    );
     response.end();
   });
   // custom body-parser for POST request ends
-
-  response.writeHead(200, {
-    "Content-Type": "application/json",
-  });
-  response.write(
-    JSON.stringify({
-      message: "POST Succesfull",
-    })
-  );
-  response.end();
 };
 
 const getHandler = (request, response) => {
@@ -46,7 +45,7 @@ const getHandler = (request, response) => {
   });
   response.write(
     JSON.stringify({
-      message: "GET Succesfull",
+      message: "GET Successfull",
       data,
     })
   );
