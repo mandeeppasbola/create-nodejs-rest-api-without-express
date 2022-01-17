@@ -15,11 +15,18 @@ const postHandler = (request, response) => {
     // joining all the chunks received
     const data = Buffer.concat(chunks);
     // data.toString() converts Buffer data to querystring format
+    const querystring = data.toString();
     // URLSearchParams: takes querystring
-    // & returns data in Object format
-    const parsedData = new URLSearchParams(data.toString());
-    console.log(parsedData);
-    // Now request data is accessible using parsedData
+    // & returns a URLSearchParams object instance.
+    const parsedData = new URLSearchParams(querystring);
+    const dataObj = {};
+    // entries() method returns an iterator
+    // allowing iteration through all key/value pairs
+    for (var pair of parsedData.entries()) {
+      dataObj[pair[0]] = pair[1];
+    }
+    console.log("dataObj: ", dataObj);
+    // Now request data is accessible using dataObj
     // sending back "Successfull message"
     response.writeHead(200, {
       "Content-Type": "application/json",
